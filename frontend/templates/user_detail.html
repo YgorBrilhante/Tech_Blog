@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="pt-br" class="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Perfil do Usuário</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+</head>
+<body class="bg-gray-100">
+  <div class="max-w-3xl mx-auto p-8">
+    <h1 class="text-2xl font-bold mb-4">Usuário</h1>
+    <div class="bg-white rounded shadow p-6">
+      <p><strong>Nome:</strong> {{ user.name }}</p>
+      <p><strong>Email:</strong> {{ user.email }}</p>
+      <p><strong>ID:</strong> {{ user.id }}</p>
+    </div>
+  </div>
+</body>
+</html>

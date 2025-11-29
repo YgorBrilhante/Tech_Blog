@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-br" class="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Usuários</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+</head>
+<body class="bg-gray-100">
+  <div class="max-w-4xl mx-auto p-8">
+    <h1 class="text-2xl font-bold mb-4">Usuários</h1>
+    <div class="overflow-x-auto bg-white rounded shadow">
+      <table class="w-full text-left">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-4 py-2">Nome</th>
+            <th class="px-4 py-2">Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for u in users %}
+          <tr class="border-t">
+            <td class="px-4 py-2">{{ u.name }}</td>
+            <td class="px-4 py-2">{{ u.email }}</td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td class="px-4 py-2" colspan="2">Nenhum usuário.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>

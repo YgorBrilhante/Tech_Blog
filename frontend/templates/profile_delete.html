@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-br" class="light">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Excluir Conta</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#2b8cee",
+            "background-light": "#f6f7f8",
+            "background-dark": "#101922",
+          },
+          fontFamily: {
+            "display": ["Lexend", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+    }
+  </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-200">
+
+  <!-- HEADER -->
+  <header
+    class="sticky top-0 z-10 flex h-16 items-center justify-between border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-background-dark px-4 md:px-8">
+    <div class="flex items-center gap-4 text-gray-900 dark:text-white">
+      <span class="material-symbols-outlined text-primary" style="font-size: 28px;">school</span>
+      <h1 class="text-xl font-bold tracking-tight">Blog Universitário</h1>
+    </div>
+  </header>
+
+  <!-- LAYOUT: SIDEBAR + CONTEÚDO -->
+  <div class="flex min-h-[calc(100vh-64px)]">
+
+    {% include 'partials/sidebar.html' %}
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-1 p-10 overflow-y-auto">
+
+      <h1 class="text-3xl font-bold mb-6 text-red-600">Excluir Conta</h1>
+
+      <div class="bg-white shadow rounded-xl p-8 space-y-6">
+
+        <p class="text-lg">
+          Tem certeza que deseja <span class="font-bold text-red-600">excluir sua conta permanentemente</span>?
+        </p>
+
+        <p class="text-gray-600">
+          Esta ação é irreversível. Todos os seus posts e dados serão apagados.
+        </p>
+
+        <div class="pt-6 border-t flex gap-4">
+          <a href="profile.html" class="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400">
+            Cancelar
+          </a>
+
+          <button class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
+            Excluir Conta
+          </button>
+        </div>
+
+      </div>
+
+    </main>
+
+  </div>
+
+</body>
+
+</html>

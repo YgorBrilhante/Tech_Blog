@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html class="light" lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Registro - University Blog</title>
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+    <!-- Fontes e Ícones -->
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    }
+                },
+            },
+        }
+    </script>
+
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-200">
+
+    <div class="flex min-h-screen">
+
+        <main class="flex-1 flex items-center justify-center p-6">
+
+            <div
+                class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 shadow-lg rounded-2xl p-8 w-full max-w-md">
+
+                <h2 class="text-3xl font-bold text-center mb-6 text-gray-900 dark:text-white">
+                    Criar Conta
+                </h2>
+
+                <!-- MENSAGENS DJANGO -->
+                {% if messages %}
+                <div class="mb-4">
+                    {% for message in messages %}
+                    <p class="text-red-500 text-sm font-semibold">
+                        {{ message }}
+                    </p>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                <!-- FORM DJANGO -->
+                <form method="POST" class="flex flex-col gap-4">
+                    {% csrf_token %}
+
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Nome Completo</label>
+                        <input type="text" name="username" required
+                            class="w-full rounded-lg border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
+                            placeholder="Ex: João Silva" />
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Email</label>
+                        <input type="email" name="email" required
+                            class="w-full rounded-lg border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
+                            placeholder="seuemail@email.com" />
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Senha</label>
+                        <input type="password" name="password" required
+                            class="w-full rounded-lg border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
+                            placeholder="********" />
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Confirmar Senha</label>
+                        <input type="password" name="password2" required
+                            class="w-full rounded-lg border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
+                            placeholder="********" />
+                    </div>
+
+                    <button type="submit"
+                        class="w-full bg-primary hover:bg-blue-600 text-white font-bold py-2 rounded-lg">
+                        Registrar
+                    </button>
+                </form>
+
+                <p class="text-center mt-4 text-sm text-gray-600 dark:text-gray-400">
+                    Já possui conta?
+                    <a href="{% url 'login' %}" class="text-primary font-semibold">Entrar</a>
+                </p>
+
+            </div>
+        </main>
+    </div>
+
+</body>
+
+</html>

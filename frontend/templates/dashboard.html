@@ -1,0 +1,178 @@
+{% load static %}
+<!DOCTYPE html>
+
+
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>User Dashboard - University Blog</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700;800;900&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings:
+                'FILL' 0,
+                'wght' 400,
+                'GRAD' 0,
+                'opsz' 24
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-200">
+
+    <div class="relative flex h-auto min-h-screen w-full flex-col">
+        <header
+            class="sticky top-0 z-10 flex h-16 items-center justify-between whitespace-nowrap border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-background-dark px-4 md:px-8">
+            <div class="flex items-center gap-4 text-gray-900 dark:text-white">
+                <span class="material-symbols-outlined text-primary" style="font-size: 28px;">school</span>
+                <h1 class="text-xl font-bold tracking-tight">Blog Universitário</h1>
+            </div>
+        </header>
+
+        <div class="flex flex-1">
+            <!-- SideNavBar -->
+            <aside class="sticky top-16 h-[calc(100vh-64px)] w-64 shrink-0 flex-col justify-between border-r border-gray-200 dark:border-gray-800 bg-white dark:bg-background-dark p-4 hidden lg:flex">
+                <div class="flex flex-col gap-4">
+                    <div class="flex items-center gap-3">
+                        <div class="flex flex-col">
+                            <h2 class="text-base font-medium text-gray-900 dark:text-white">{{ request.user.username }}</h2>
+                            <p class="text-sm font-normal text-gray-500 dark:text-gray-400">{{ request.user.email }}</p>
+                         
+                        </div>
+
+                    </div>
+                    <nav class="flex flex-col gap-2 mt-4">
+                        <a class="flex items-center gap-3 rounded-lg px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-800 {% if request.resolver_match.url_name == 'index' or request.resolver_match.url_name == 'post_detail' %}bg-primary/10 text-primary dark:bg-primary/20{% endif %}"
+                            href="{% url 'index' %}">
+                            <span class="material-symbols-outlined">home</span>
+                            <p class="text-sm font-medium">Home</p>
+                        </a>
+                        <a class="flex items-center gap-3 rounded-lg px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-800 {% if request.resolver_match.url_name == 'dashboard' or request.resolver_match.url_name == 'create_post' or request.resolver_match.url_name == 'update_post' or request.resolver_match.url_name == 'profile' or request.resolver_match.url_name == 'profile_edit' or request.resolver_match.url_name == 'profile_delete' %}bg-primary/10 text-primary dark:bg-primary/20{% endif %}"
+                            href="{% url 'dashboard' %}">
+                            <span class="material-symbols-outlined">person</span>
+                            <p class="text-sm font-medium">Perfil</p>
+                        </a>
+                    </nav>
+
+                </div>
+                <div class="flex flex-col gap-1">
+                    <a class="flex items-center gap-3 rounded-lg px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-800"
+                        href="{% url 'logout' %}">
+                        <span class="material-symbols-outlined">logout</span>
+                        <p class="text-sm font-medium">Sair</p>
+                    </a>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="flex-1 p-4 md:p-8">
+                <div class="mx-auto max-w-7xl">
+                    <!-- PageHeading and Action Button -->
+                    <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+                        <h1 class="text-4xl font-black tracking-tighter text-gray-900 dark:text-white">Dashboard</h1>
+                        <div class="flex gap-3">
+                          <a href="{% url 'create_post' %}"
+                             class="flex h-10 cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg bg-primary px-5 text-sm font-bold text-white">
+                            <span class="material-symbols-outlined">add</span>
+                            <span>Novo Post</span>
+                          </a>
+                          <a href="{% url 'profile_edit' %}"
+                             class="flex h-10 cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg bg-red-600 px-5 text-sm font-bold text-white">
+                            <span class="material-symbols-outlined">settings</span>
+                            <span>Configurações</span>
+                          </a>
+                        </div>
+                    </div>
+                    <!-- Stats -->
+                    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-8">
+                        <div
+                            class="flex flex-col gap-2 rounded-xl p-6 border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900/50">
+                            <p class="text-base font-medium text-gray-600 dark:text-gray-300">Total de Posts</p>
+                            <p class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">{{ posts|length }}</p>
+                        </div>
+                    </div>
+                    <!-- SectionHeader -->
+                    <h2 class="text-2xl font-bold tracking-tight text-gray-900 dark:text-white px-4 pb-3 pt-5">Meus
+                        Posts
+                    </h2>
+                    <!-- Post List Table -->
+                    <div
+                        class="overflow-x-auto rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900/50">
+                        <table class="w-full text-sm text-left">
+                            <thead
+                                class="text-xs uppercase text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-800">
+                                <tr>
+                                    <th class="px-6 py-3" scope="col">Titulo</th>
+                                    <th class="px-6 py-3" scope="col">Status</th>
+                                    <th class="px-6 py-3" scope="col">Data'</th>
+                                    <th class="px-6 py-3 text-right" scope="col">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for p in posts %}
+                                <tr class="border-b dark:border-gray-800">
+                                    <th class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap" scope="row">
+                                        {{ p.titulo }}
+                                    </th>
+                                    <td class="px-6 py-4">
+                                        <span class="inline-flex items-center rounded-full bg-green-100 dark:bg-green-900/50 px-2.5 py-0.5 text-xs font-medium text-green-800 dark:text-green-300">Publicado</span>
+                                    </td>
+                                    <td class="px-6 py-4 text-gray-500 dark:text-gray-400">{{ p.created_at|slice:':10' }}</td>
+                                    <td class="px-6 py-4 text-right">
+                                        <div class="flex justify-end gap-2">
+                                            <a href="{% url 'update_post' p.id %}"
+                                               class="flex h-8 w-8 items-center justify-center rounded-lg hover:bg-yellow-100 dark:hover:bg-yellow-900/50 text-yellow-500">
+                                                <span class="material-symbols-outlined" style="font-size: 18px;">edit</span>
+                                            </a>
+                                            <a href="{% url 'delete_post' p.id %}"
+                                               class="flex h-8 w-8 items-center justify-center rounded-lg hover:bg-red-100 dark:hover:bg-red-900/50 text-red-500">
+                                                <span class="material-symbols-outlined" style="font-size: 18px;">delete</span>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="4" class="px-6 py-4 text-gray-500">Você ainda não tem posts.</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    <script src="{% static 'js/dashboard.js' %}"></script>
+
+</body>
+
+</html>

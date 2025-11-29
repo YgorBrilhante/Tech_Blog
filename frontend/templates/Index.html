@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html class="light" lang="pt-BR">
+{% load static %}
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Blog Universitário</title>
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                },
+            },
+        }
+    </script>
+
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings:
+                'FILL' 0,
+                'wght' 400,
+                'GRAD' 0,
+                'opsz' 24
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-200">
+
+    <div class="relative flex h-auto min-h-screen w-full flex-col">
+
+        <!-- TOP NAV -->
+        <header class="sticky top-0 z-10 flex h-16 items-center justify-between border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-background-dark px-4 md:px-8">
+            <div class="flex items-center gap-4 text-gray-900 dark:text-white">
+                <span class="material-symbols-outlined text-primary text-3xl">school</span>
+                <h1 class="text-xl font-bold">Blog Universitário</h1>
+            </div>
+        </header>
+
+        <div class="flex h-full">
+
+            {% include 'partials/sidebar.html' %}
+
+            <!-- MAIN CONTENT -->
+            <main class="flex-1 p-6 md:p-10">
+                <div class="max-w-7xl mx-auto">
+
+                    <h1 class="text-4xl font-black">Posts Recentes</h1>
+                    <!-- Filtro de Tags -->
+                    <form method="GET" class="mt-6 flex items-center gap-3">
+                        <label class="text-sm">Filtrar por Tag</label>
+                        <select name="tag_id" class="rounded-lg border-gray-300 bg-background-light p-2">
+                            <option value="">Todas</option>
+                            {% for t in tags %}
+                                <option value="{{ t.id }}" {% if selected_tag_id == t.id|stringformat:"s" %}selected{% endif %}>{{ t.name }}</option>
+                            {% endfor %}
+                        </select>
+                        <button class="px-4 py-2 rounded-lg bg-primary text-white text-sm font-semibold">Filtrar</button>
+                    </form>
+
+                    <!-- LISTA DE POSTS -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 mt-8">
+
+                        {% for post in posts %}
+                        <div class="flex flex-col bg-white dark:bg-gray-900 rounded-xl shadow-sm border overflow-hidden">
+
+                            <div class="p-6">
+                                <p class="text-primary font-semibold mb-2">Post</p>
+
+                                <h3 class="text-xl font-bold mb-3 hover:text-primary cursor-pointer">
+                                    <a href="{% url 'post_detail' post.id %}">{{ post.titulo }}</a>
+                                </h3>
+
+                                <p class="text-sm opacity-80 mb-4">
+                                    {{ post.conteudo|truncatechars:120 }}
+                                </p>
+
+                                <div class="flex gap-2 flex-wrap"></div>
+                            </div>
+
+                            <div class="px-6 py-4 border-t flex items-center justify-between text-xs opacity-70">
+                                <span>{{ post.user_name|default:post.user_id }}</span>
+                                <span>{{ post.created_at|slice:':10' }}</span>
+                            </div>
+
+                        </div>
+                        {% endfor %}
+
+                        {% if posts|length == 0 %}
+                        <p class="opacity-60">Nenhum post encontrado.</p>
+                        {% endif %}
+
+                    </div>
+
+                </div>
+            </main>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

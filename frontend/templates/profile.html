@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-br" class="light">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Meu Perfil</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700;800;900&amp;display=swap"
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#2b8cee",
+            "background-light": "#f6f7f8",
+            "background-dark": "#101922",
+          },
+          fontFamily: {
+            "display": ["Lexend", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+    }
+
+    
+  </style>
+</head>
+
+<body class="bg-gray-100 h-screen">
+
+  <!-- HEADER -->
+  <header
+    class="sticky top-0 z-10 flex h-16 items-center justify-between whitespace-nowrap border-b border-gray-200 bg-white px-4 md:px-8">
+    <div class="flex items-center gap-4 text-gray-900">
+      <span class="material-symbols-outlined text-primary" style="font-size: 28px;">school</span>
+      <h1 class="text-xl font-bold tracking-tight">Blog Universitário</h1>
+    </div>
+  </header>
+
+  <!-- LAYOUT: Sidebar + Conteúdo -->
+  <div class="flex h-[calc(100vh-64px)]">
+
+    {% include 'partials/sidebar.html' %}
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="flex-1 p-10 overflow-y-auto">
+      
+      <h1 class="text-3xl font-bold mb-6">Meu Perfil</h1>
+
+      <div class="bg-white shadow rounded-xl p-8 space-y-6">
+
+        <div>
+          <p class="text-gray-500">Nome:</p>
+          <p class="text-xl font-medium">{{ request.user.username }}</p>
+        </div>
+
+        <div>
+          <p class="text-gray-500">E-mail:</p>
+          <p class="text-xl font-medium">{{ request.user.email }}</p>
+        </div>
+
+        <div>
+          <p class="text-gray-500">Senha:</p>
+          <p class="text-xl font-medium">{{ request.user.password }}</p> <!-- nunca mostramos senha real -->
+        </div>
+
+        <div class="pt-6 border-t flex gap-4">
+          <a href="{% url 'profile_edit'%}" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+            Editar Perfil
+          </a>
+
+          <a href="{% url 'profile_delete'%}" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
+            Excluir Conta
+          </a>
+        </div>
+
+      </div>
+
+    </main>
+
+  </div>
+
+  
+
+</body>
+
+</html>

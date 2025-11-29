@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html class="light" lang="pt-br">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Criar Post - Dashboard</title>
+
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            primary: "#2b8cee",
+            "background-light": "#f6f7f8",
+            "background-dark": "#101922",
+          },
+          fontFamily: {
+            display: ["Lexend", "sans-serif"],
+          },
+        },
+      },
+    }
+  </script>
+
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24;
+      font-size: 20px;
+    }
+  </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-200">
+
+  <div class="relative flex h-auto min-h-screen w-full flex-col">
+
+    <!-- HEADER -->
+    <header
+      class="sticky top-0 z-10 flex h-16 items-center justify-between border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-background-dark px-4 md:px-8">
+      <div class="flex items-center gap-4 text-gray-900 dark:text-white">
+        <span class="material-symbols-outlined text-primary" style="font-size: 28px;">school</span>
+        <h1 class="text-xl font-bold tracking-tight">Criar Novo Post</h1>
+      </div>
+
+      <div class="flex items-center gap-4">
+        <button
+          class="flex h-10 w-10 items-center justify-center rounded-full bg-background-light dark:bg-gray-800 text-gray-600 dark:text-gray-300">
+          <span class="material-symbols-outlined">notifications</span>
+        </button>
+      </div>
+    </header>
+
+    <div class="flex flex-1">
+
+      {% include 'partials/sidebar.html' %}
+
+      <!-- MAIN CONTENT -->
+      <main class="flex-1 p-4 md:p-8">
+        <div class="mx-auto max-w-4xl">
+
+          <!-- CARD PRINCIPAL (PADRÃO A) -->
+          <div class="bg-white dark:bg-gray-900 rounded-lg p-6 shadow">
+
+            <h2 class="text-2xl font-bold mb-6">Novo Post</h2>
+
+            <form method="POST" enctype="multipart/form-data" class="flex flex-col gap-6">
+              {% csrf_token %}
+
+              <!-- TÍTULO -->
+              <div>
+                <label class="block text-sm font-medium mb-1">Título</label>
+                <input type="text" name="titulo"
+                  class="w-full rounded-lg border-gray-300 dark:border-gray-700 bg-background-light dark:bg-gray-800 text-gray-900 dark:text-white p-3">
+              </div>
+              <!-- CONTEÚDO -->
+              <div>
+                <label class="block text-sm font-medium mb-1">Conteúdo</label>
+                <textarea name="conteudo" rows="6"
+                  class="w-full rounded-lg border-gray-300 dark:border-gray-700 bg-background-light dark:bg-gray-800 text-gray-900 dark:text-white p-3"></textarea>
+              </div>
+
+
+              <!-- TAG -->
+              <div>
+                <label class="block text-sm font-medium mb-1">Tag</label>
+                <select name="tag_id"
+                  class="w-full rounded-lg border-gray-300 dark:border-gray-700 bg-background-light dark:bg-gray-800 text-gray-900 dark:text-white p-3">
+                  {% for t in tags %}
+                    <option value="{{ t.id }}">{{ t.name }}</option>
+                  {% empty %}
+                    <option value="">Sem tags disponíveis</option>
+                  {% endfor %}
+                </select>
+              </div>
+
+
+              <!-- BOTÃO -->
+              <button type="submit"
+                class="w-full bg-primary text-white py-3 rounded-lg font-medium hover:bg-blue-600">Publicar
+                Post</button>
+
+
+            </form>
+          </div>
+
+        </div>
+      </main>
+    </div>
+  </div>
+
+</body>
+
+</html>
